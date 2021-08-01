@@ -37,6 +37,13 @@ class BooksApp extends React.Component {
     return books.filter(book => book.shelf === criteria);
   }
 
+  changeShelf(book, shelf) {
+    BooksAPI.update(book, shelf)
+      .then((response) => {
+        window.location.reload();
+      })
+  }
+
   render() {
     return (
       <div className="app">
@@ -73,12 +80,10 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {this.state.currentlyReading.map(book =>
-                        <li key={book.title}>
+                        <li key={book.id}>
                           <Book
-                            title={book.title}
-                            authors={book.authors}
-                            shelf={book.shelf}
-                            thumbnail={book.imageLinks.thumbnail}
+                            book={book}
+                            onChangeShelf={this.changeShelf}
                           />
                         </li>
                       )}
@@ -90,12 +95,10 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       {this.state.wantToRead.map(book =>
-                        <li key={book.title}>
+                        <li key={book.id}>
                           <Book
-                            title={book.title}
-                            authors={book.authors}
-                            shelf={book.shelf}
-                            thumbnail={book.imageLinks.thumbnail}
+                            book={book}
+                            onChangeShelf={this.changeShelf}
                           />
                         </li>
                       )}
@@ -106,13 +109,11 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    {this.state.read.map(book =>
-                        <li key={book.title}>
+                      {this.state.read.map(book =>
+                        <li key={book.id}>
                           <Book
-                            title={book.title}
-                            authors={book.authors}
-                            shelf={book.shelf}
-                            thumbnail={book.imageLinks.thumbnail}
+                            book={book}
+                            onChangeShelf={this.changeShelf}
                           />
                         </li>
                       )}
