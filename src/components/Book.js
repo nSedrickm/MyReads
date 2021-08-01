@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 const Book = (props) => {
 
-    const {book, onChangeShelf} = props;
+    const { book, onChangeShelf } = props;
 
     return (
         <div className="book">
             <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : null})` }}></div>
                 <div className="book-shelf-changer">
                     <select
                         defaultValue={book.shelf}
@@ -25,7 +25,7 @@ const Book = (props) => {
                 </div>
             </div>
             <div className="book-title">{book.title}</div>
-            {book.authors.map(author =>
+            {book.authors && book.authors.map(author =>
                 <div
                     key={author}
                     className="book-authors">
