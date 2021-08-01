@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 
 const Book = (props) => {
 
+    const {book, onChangeShelf} = props;
+
     return (
         <div className="book">
             <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${props.thumbnail})` }}></div>
+                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                 <div className="book-shelf-changer">
-                    <select defaultValue={props.shelf}>
+                    <select
+                        defaultValue={book.shelf}
+                        onChange={(event) => {
+                            onChangeShelf(book, event.target.value);
+                        }}
+                    >
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
@@ -17,8 +24,8 @@ const Book = (props) => {
                     </select>
                 </div>
             </div>
-            <div className="book-title">{props.title}</div>
-            {props.authors.map(author =>
+            <div className="book-title">{book.title}</div>
+            {book.authors.map(author =>
                 <div
                     key={author}
                     className="book-authors">
@@ -30,10 +37,8 @@ const Book = (props) => {
 }
 
 Book.propTypes = {
-    title: PropTypes.string,
-    authors: PropTypes.array,
-    thumbnail: PropTypes.string,
-    shelf: PropTypes.string
+    book: PropTypes.object.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
 }
 
 export default Book;
