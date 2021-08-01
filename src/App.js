@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI';
 import './App.css'
-import Book from "./components/Book";
+import BookShelf from './components/BookShelf';
 import SearchPage from './SearchPage';
 import { Route, Link } from 'react-router-dom';
 
@@ -51,51 +51,21 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {this.state.currentlyReading.map(book =>
-                        <li key={book.id}>
-                          <Book
-                            book={book}
-                            onChangeShelf={this.changeShelf}
-                          />
-                        </li>
-                      )}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {this.state.wantToRead.map(book =>
-                        <li key={book.id}>
-                          <Book
-                            book={book}
-                            onChangeShelf={this.changeShelf}
-                          />
-                        </li>
-                      )}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {this.state.read.map(book =>
-                        <li key={book.id}>
-                          <Book
-                            book={book}
-                            onChangeShelf={this.changeShelf}
-                          />
-                        </li>
-                      )}
-                    </ol>
-                  </div>
-                </div>
+                <BookShelf
+                  title="Currently Reading"
+                  books={this.state.currentlyReading}
+                  onChangeShelf={this.changeShelf}
+                />
+                <BookShelf
+                  title="Want to Read"
+                  books={this.state.wantToRead}
+                  onChangeShelf={this.changeShelf}
+                />
+                <BookShelf
+                  title="Read"
+                  books={this.state.read}
+                  onChangeShelf={this.changeShelf}
+                />
               </div>
             </div>
             <div className="open-search">
