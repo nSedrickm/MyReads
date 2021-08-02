@@ -43,12 +43,23 @@ const SearchPage = (props) => {
   const searchBooks = () => {
     BooksAPI.search(state.query)
       .then((response) => {
+        let orderedShelf = arrangeBooks(response, books);
         setState(prevState => {
-          return { ...prevState, searchResults: response, message: "" }
+          return { ...prevState, searchResults: orderedShelf, message: "" }
         })
       })
   }
 
+  const arrangeBooks = (searchedBooks, books) => {
+    return searchedBooks.map((item) => {
+      books.forEach(book => {
+        if (item.title === book.title) {
+          item.shelf = book.shelf;
+        }
+      })
+      return item;
+    })
+  }
 
   return (
     <div className="app">
