@@ -19,33 +19,31 @@ const SearchPage = (props) => {
 
   const setQuery = (query) => {
     setState(prevState => {
-      return { ...prevState, query: query };
+      return { ...prevState, searchResults: [], query: query };
     })
   }
 
-  const debounceInput = (event) => {
-    clearTimeout(timer)
+  const debounceInput = () => {
+    window.clearTimeout(timer)
     timer = setTimeout(() => {
       setState(prevState => {
         return { ...prevState, message: "searching please wait ..." };
       });
       searchBooks();
-    }, 500)
+    }, 1000)
   }
 
   const handleSearchInput = () => {
-    clearTimeout(timer);
+    window.clearTimeout(timer);
     setState(prevState => {
       return { ...prevState, message: "you are typing ..." };
     })
   }
 
   const searchBooks = () => {
-    console.log(state.query);
-    if (state.query.trim().length) {
+    if (state.query.length && state.query.trim().length) {
       BooksAPI.search(state.query)
         .then((response) => {
-          console.log(response)
           let orderedShelf = arrangeBooks(response, books);
           setState(prevState => {
             return { ...prevState, searchResults: orderedShelf, message: "" }
@@ -53,7 +51,7 @@ const SearchPage = (props) => {
         })
         .catch((error) => {
           setState(prevState => {
-            return { ...prevState, message: "" }
+            return { ...prevState, message: "Sorry we didn't find any match" }
           })
         })
     } else {
@@ -89,7 +87,7 @@ const SearchPage = (props) => {
               type="search"
               placeholder="Search by title or author"
               onChange={(event) => setQuery(event.target.value)}
-              onKeyPress={(event) => handleSearchInput(event)}
+              onKeyDown={() => handleSearchInput()}
               onKeyUp={() => debounceInput()}
             />
           </div>
