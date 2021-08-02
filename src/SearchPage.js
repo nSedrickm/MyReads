@@ -41,13 +41,26 @@ const SearchPage = (props) => {
   }
 
   const searchBooks = () => {
-    BooksAPI.search(state.query)
-      .then((response) => {
-        let orderedShelf = arrangeBooks(response, books);
-        setState(prevState => {
-          return { ...prevState, searchResults: orderedShelf, message: "" }
+    console.log(state.query);
+    if (state.query.trim().length) {
+      BooksAPI.search(state.query)
+        .then((response) => {
+          console.log(response)
+          let orderedShelf = arrangeBooks(response, books);
+          setState(prevState => {
+            return { ...prevState, searchResults: orderedShelf, message: "" }
+          })
         })
+        .catch((error) => {
+          setState(prevState => {
+            return { ...prevState, message: "" }
+          })
+        })
+    } else {
+      setState(prevState => {
+        return { ...prevState, message: "Sorry we cannot search for what you typed" }
       })
+    }
   }
 
   const arrangeBooks = (searchedBooks, books) => {
