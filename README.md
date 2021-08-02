@@ -9,6 +9,7 @@ MyReads is a React application you can use to keep track of your favorite books.
 * Clone the project to your computer
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
+* You can view the application at [http://localhost:3000](http://localhost:3000) in your browser
 * You can also build a production version with `npm run build`
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). learn more [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
